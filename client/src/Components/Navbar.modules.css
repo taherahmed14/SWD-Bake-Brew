@@ -1,0 +1,129 @@
+  .navbar {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    position: fixed;
+    color: black;
+    justify-content: space-between;
+    z-index: 1;
+    top: 0px;
+    background-color: white !important;
+    border-bottom: 1px solid #e0e0e0;
+    /* margin-bottom: 2rem; */
+  }
+
+  .inner_2 {
+    width: 50%;
+    height: 100%;
+    /* border: 1px solid blue; */
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    width: 120px;
+    height: 50px;
+    padding-left: 2rem;
+  }
+
+  .category_list {
+    margin: auto;
+  }
+
+  .dropdownBtn {
+    color: black;
+  }
+
+  .third_div {
+    display: flex;
+    width: 10%;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+  }
+
+  .icon_div {
+    margin: auto 0px;
+    padding: 1rem;
+    cursor: pointer;
+  }
+
+  .user-icon button {
+    font-size: 30px;
+    position: relative;
+  }
+
+  .input-box {
+    position: relative;
+  }
+
+  .input-box i {
+    position: absolute;
+    right: 13px;
+    top: 15px;
+    color: #ced4da;
+    margin: auto;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .user-details {
+    position: absolute;
+    top: 55px;
+    right: 15px;
+    text-align: center;
+    width: 10%;
+    cursor: pointer;
+  }
+
+  /* responsive css for mobile */
+  @media (max-width: 660px) {
+    .inner_2 {
+      display: none;
+    }
+
+    .sidebar {
+      display: block;
+
+
+    }
+
+    .user-icon {
+      display: none;
+    }
+
+    .third_div {
+      width: 5%;
+    }
+
+    .sidebar div {
+      /* border: 1px solid red; */
+      display: flex;
+      align-items: center;
+
+      height: 50px;
+      padding-left: 1rem;
+    }
+
+    .navbar {
+      /* border: 1px solid red; */
+      justify-content: space-between;
+    }
+
+    .third_div {
+
+      justify-content: flex-end;
+      width: 10%;
+      height: 100%;
+
+    }
+
+    .inner {
+      display: block;
+    }
+
+  }

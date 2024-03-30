@@ -1,0 +1,143 @@
+.footer {
+  width: 98.7%;
+  height: auto;
+  background-color: black;
+  color: grey;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.innerDiv {
+  width: 25%;
+  padding: 10px;
+  height: auto;
+  /* border: 1px solid red; */
+}
+
+.details {
+  width: 80%;
+  height: auto;
+  margin: 50px auto;
+  /* border: 1px solid green; */
+  border-bottom: 1px solid grey;
+  justify-content: space-between;
+  display: flex;
+  gap: 2%;
+}
+
+.log {
+  filter: invert(100%) grayscale(100%);
+  width: 200px;
+  height: 70px;
+}
+
+.Footerinner {
+  display: block;
+  text-align: left;
+}
+
+.footer_heading {
+  font-weight: bolder;
+  font-size: large;
+}
+
+.innerDiv > p,
+h3 {
+  text-align: left;
+  font-size: 12px;
+  justify-content: left;
+}
+
+.footer_contact {
+  display: flex;
+  flex-direction: row;
+}
+
+span {
+  font-size: 12px;
+  padding-left: 5px;
+  text-align: left;
+}
+
+.contactus {
+  /* mar */
+  justify-content: left;
+  margin-left: -10px;
+}
+
+.innerDiv_add {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: 25%;
+  padding: 10px;
+}
+
+.innerDiv_add i {
+  padding: 5px;
+}
+
+.innerDiv_follow {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: 25%;
+  padding: 10px;
+}
+
+.innerDiv_follow div {
+  display: flex;
+  gap: 15px;
+}
+
+.iso-img {
+  width: 75px;
+  height: 75px;
+  padding-top: 25px;
+}
+
+@media (max-width: 460px) {
+  .details {
+    /* justify-content: space-between; */
+    display: grid;
+    gap: 2%;
+    grid-template-columns: repeat(1, 1fr);
+    width: auto;
+    height: fit-content;
+    /* border: 1px solid red; */
+  }
+
+  .copy {
+    margin-top: 3rem;
+  }
+
+  .innerDiv_follow > div {
+    height: auto;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .details {
+    /* justify-content: space-between; */
+    display: grid;
+    gap: 2%;
+    grid-template-columns: repeat(2, 1fr);
+    width: auto;
+    height: fit-content;
+    /* border: 1px solid red; */
+  }
+
+  .innerDiv_follow > div {
+    height: auto;
+    width: 100%;
+    text-align: center;
+  }
+  .copy {
+    margin-top: 3rem;
+    text-align: center;
+    border: 1px solid red;
+  }
+}
