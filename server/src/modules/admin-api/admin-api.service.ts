@@ -1,13 +1,11 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { UserLoginDto, CreateUserAccountDto } from './dto/admin-api.dto';
-import IJwtPayload from 'src/authentication/jwt-payload';
-import { JwtService } from '@nestjs/jwt';
 import { DataSource, Repository } from 'typeorm';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { UserEntity, UsersRole } from 'src/entities/user.entity';
-import * as bcrypt from 'bcrypt';
-import { AuthenticationService } from 'src/authentication/authentication.service';
-import ProductWarranty from 'src/entities/warranty.entity';
+import { Products } from 'src/entities/user-api.entity';
+import { DatabaseFileService } from '../database-file/database-file.service';
+import { CreateProductDto } from './dto/admin-api.dto';
+import { EncryptionService } from 'src/common/encryption/encryption';
 
 @Injectable()
 export class AdminApiService {
@@ -16,130 +14,143 @@ export class AdminApiService {
         @InjectDataSource() private dataSource: DataSource,
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
-        @InjectRepository(ProductWarranty)
-        private readonly warrantyRepository: Repository<ProductWarranty>,
-        private readonly authenticationService: AuthenticationService,
+        @InjectRepository(Products)
+        private readonly productsRepository: Repository<Products>,
+        private readonly databaseFilesService: DatabaseFileService,
+        private readonly encryptionService: EncryptionService,
     ) {}
 
-    async userLogIn(userLoginDto: UserLoginDto) {
-        const { email, password } = userLoginDto;
-        
+    async deleteProduct(id : string) {
         try {
-          let user = await this.userRepository.findOne({
-            select: [
-              'id',
-              'email',
-              'firstname',
-              'lastname',
-              'role',
-              'password',
-            ],
-            where: { email: email, role: UsersRole.ADMIN },
-          });
-          
-          if (user && (await user.validatePassword(password))) {            
-            const payload: IJwtPayload = { email, role: 'admin' };
-            // const jwtAccessToken = await this.jwtService.signAsync(payload);
-            const jwtAccessToken = await this.authenticationService.generateToken(payload)
+            await this. productsRepository.update(
+                { id },
+                { availableStatus: false }
+            );
 
-            let resuser = {
-              id: user.id,
-              email: user.email,
-              firstname: user.firstname,
-              lastname: user.lastname,
-              role: user.role
-            }
-
-            return { statusCode: 200, jwtAccessToken, user: resuser };
-          } else {
             return {
-              statusCode: 400,
-              message: ['Invalid Credentials'],
-              error: 'Bad Request',
-            };
-          }
-        } catch (error) {
-          console.log(error);
-          return {
-            statusCode: 500,
-            message: [new InternalServerErrorException(error)['response']['name']],
-            error: 'Bad Request',
-          };
+                status: 200,
+                message: "Product removed successfully"
+            }
+        }
+        catch(error) {
+            return {
+                status: 500,
+                message: [new InternalServerErrorException(error)['response']['name']],
+                error: 'Bad Request',
+            }
         }
     }
 
-    async createUserAccount(createUserAccountDto: CreateUserAccountDto) {
+    async createProduct(data: CreateProductDto, dataBuffer: any, filename: string) {
+        try {
+            let newProduct = new Products();
+            newProduct.title = data?.title;
+            newProduct.price = +data?.price;
+            newProduct.quantity = +data?.quantity;
+            newProduct.discount = +data?.discount;
+            newProduct.category = data?.category;
+        
+            let productData = await this.productsRepository.save(newProduct); 
 
-      //check for existing account with same email id
-      let existingUser = await this.userRepository.find({
-       where: { email: createUserAccountDto.email, role: UsersRole.ADMIN },
-      });
-
-      if(existingUser.length > 0) {
-        return {
-          status: 400,
-          message: "The user with this email address already exists."
+            const imageStatus = await this.createProductImage(productData.id, dataBuffer, filename);
+        
+            if(imageStatus) {
+                return {
+                  status: 200,
+                  message: "Product saved successfully"
+                }
+            }
+            else {
+                await this.productsRepository.delete({ id:productData.id  })
+                return {
+                    status: 400,
+                    message: "Failed to save product"
+                }
+            }
         }
-      }
-  
-      //salt password
-      const salt = await bcrypt.genSalt();
-      const hashPassword = await bcrypt.hash(
-        createUserAccountDto.password, salt
-      );
-
-      try {
-        let newUser = new UserEntity();
-        newUser.firstname = createUserAccountDto.firstname;
-        newUser.middlename = createUserAccountDto?.middlename;
-        newUser.lastname = createUserAccountDto.lastname;
-        newUser.email = createUserAccountDto.email;
-        newUser.mobile = createUserAccountDto.mobile;
-        newUser.password = hashPassword;
-        newUser.salt = salt;
-        newUser.role = UsersRole.ADMIN;
-
-        let user = await this.userRepository.save(newUser);
-        console.log("User: ", user);
-
-        //Notify Email
-
-        return {
-          status: 200,
-          message: "User created successfully."
+        catch(error) {
+            return {
+                status: 500,
+                message: [new InternalServerErrorException(error)['response']['name']],
+                error: 'Bad Request',
+            }
         }
-
-      }
-      catch(error) {
-        return {
-          statusCode: 500,
-          message: [new InternalServerErrorException(error)['response']['name']],
-          error: 'Bad Request',
-        }
-      }
     }
 
-    async getAllWarrantyRecords(pageSize: string, page: string) {
-      try {
-        const limit = pageSize ? +pageSize : 5;
-        const offset = +page > 0 ? (+page -1) * limit : 0;
-
-        let record = await this.dataSource.query(`
-        select * from product_warranty pw order by pw.createdat desc limit ${limit} offset ${offset}`);
-        // console.log("Warranty records: ", record);
-        return {
-          status: 200,
-          message: "Success",
-          warranty: record
+    async createProductImage(data: string, dataBuffer: any, filename: string) { 
+        try {
+            const imageres = await this.databaseFilesService.uploadDatabaseFile(data, dataBuffer, filename);
+            console.log("Image res::", imageres);
+            
+            if(imageres?.id) 
+                return true;
+            else 
+                return false;
         }
-      }
-      catch(error) {
-        return {
-          statusCode: 500,
-          message: [new InternalServerErrorException(error)['response']['name']],
-          error: 'Bad Request',
-        };
-      }
+        catch(error) {
+            return {
+                status: 500,
+                message: [new InternalServerErrorException(error)['response']['name']],
+                error: 'Bad Request',
+            }
+        }
+    }
+
+    async getAdmins() {
+        try {
+            let allAdmin = await this.dataSource.query(
+                `select id, firstname as "name", nameiv, nametag,
+                email, emailiv, emailtag,
+                createdat, verification as "verified"
+                from tbluser t where t."role" = 'admin' order by t.createdat desc`
+            );
+    
+            for(let i = 0; i < allAdmin.length; i++) {
+                allAdmin[i].email = this.encryptionService.decrypt(
+                  allAdmin[i].email, 
+                  allAdmin[i].emailiv, 
+                  allAdmin[i].emailtag
+                );
+    
+                allAdmin[i].name = this.encryptionService.decrypt(
+                    allAdmin[i].name, 
+                    allAdmin[i].nameiv, 
+                    allAdmin[i].nametag
+                );
+
+                allAdmin[i].role = "Admin";
+            }
+    
+            return {
+                status: 200,
+                data: allAdmin
+            }
+        }
+        catch(error) {
+            return {
+                status: 500,
+                message: [new InternalServerErrorException(error)['response']['name']],
+                error: 'Bad Request',
+            }
+        }
+    }
+
+    async deleteAdmin(id: string) {
+        try {
+            await this.userRepository.delete({ id });
+
+            return {
+                status: 200,
+                message: "User successfully deleted"
+            }
+        }
+        catch(error) {
+            return {
+                status: 500,
+                message: [new InternalServerErrorException(error)['response']['name']],
+                error: 'Bad Request',
+            }
+        }
     }
     
 }

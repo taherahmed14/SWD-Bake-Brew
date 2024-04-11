@@ -3,8 +3,6 @@ import "./ShippingLayout.css";
 import cartImg from "../../Assets/desc1.jpg";
 
 const CartItemComponent = ({ cartItems,totalPrice }) => {
-  const shipping = 100;
-  const tax = 25;
 
   const [base64String, setbase64String] = useState([""]);
 
@@ -34,7 +32,7 @@ const CartItemComponent = ({ cartItems,totalPrice }) => {
               <div className="cart_name_div"> {item.title}</div>
               <div className="cart_proce_div">
                 {" "}
-                ₹ {item.discountPrice} x {item.quantity}
+                € {item.price} x {item.quantity}
               </div>
             </div>
           </>
@@ -43,22 +41,22 @@ const CartItemComponent = ({ cartItems,totalPrice }) => {
       <div>
         <div className="cart_subTotal_div">
           <div>Sub-Total</div>
-          <div>₹{totalPrice}</div>
+          <div>€{totalPrice}</div>
         </div>
         <div className="cart_subTotal_div">
           <div>Shipping</div>
-          <div>₹{shipping}</div>
+          <div>€ 3</div>
         </div>
         <div className="cart_subTotal_div">
           <div>Estimated Taxes</div>
-          <div>₹{tax}</div>
+          <div>€ 1</div>
         </div>
         <div className="cart_Total_div">
           <div className="cart_Total">
             Total <span></span>
           </div>
           <div className="cart_Total">
-            <span className="inr">INR</span> ₹{totalPrice + shipping + tax}
+            <span className="inr">INR</span> €{totalPrice + 3 + 1}
           </div>
         </div>
       </div>

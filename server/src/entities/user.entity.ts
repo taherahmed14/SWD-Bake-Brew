@@ -17,6 +17,7 @@ import {
   
   export enum UsersRole {
     CUSTOMER = 'customer',
+    SUPER_ADMIN = 'SUPER_ADMIN',
     ADMIN = 'admin'
   }
   
@@ -58,6 +59,27 @@ import {
   
     @Column({ default: null })
     mobile: string;
+
+    @Column({ default: Flags.N })
+    verification: Flags;
+
+    @Column({ default: null })
+    nameiv: string;
+
+    @Column({ default: null })
+    nametag: string;
+
+    @Column({ default: null })
+    emailiv: string;
+
+    @Column({ default: null })
+    emailtag: string;
+
+    @Column({ default: null })
+    verifytoken: string;
+
+    @Column({ default: null })
+    otp: number;
   
     async validatePassword(password: string): Promise<boolean> {
       const hashPassword = await bcrypt.compare(password, this.password);

@@ -4,12 +4,14 @@ import {
     BaseEntity,
     PrimaryGeneratedColumn,
     JoinColumn,
-    OneToOne
+    OneToOne,
+    CreateDateColumn,
+    UpdateDateColumn
 } from 'typeorm';
 import ProductImage from './product_image.entity';
 
 @Entity({ name: 'tblProduct' })
-export class NextronProducts extends BaseEntity {
+export class Products extends BaseEntity {
     @Column()
     @PrimaryGeneratedColumn("uuid")
     id: string;
@@ -66,109 +68,10 @@ export class NextronProducts extends BaseEntity {
     brand: string;
 
     @Column({ default: null })
-    generatorCompatibility: string;
-
-    @Column({ default: null })
-    material: string;
-
-    @Column({ default: null })
-    displayType: string;
-
-    @Column({ default: null })
-    indicatorType: string;
-
-    @Column({ default: null })
-    surgeIndicator: string;
-
-    @Column({ default: null })
-    masterSwitch: string;
-
-    @Column({ default: null })
-    mountType: string;
-
-    @Column({ default: null })
-    underVoltProtection: string;
-
-    @Column({ default: null })
-    overVoltProtection: string;
-
-    @Column({ default: null })
-    surgeProtection: string;
-
-    @Column({ default: null })
-    overloadProtection: string;
-
-    @Column({ default: null })
-    minimumInputPower: string;
-
-    @Column({ default: null })
-    maximumInputPower: string;
-
-    @Column({ default: null })
-    minimumOutputPower: string;
-
-    @Column({ default: null })
-    maximumOutputPower: string;
-
-    @Column({ default: null })
     weight: string;
 
     @Column({ default: null })
-    coveredInWarranty: string;
-
-    @Column({ default: null })
-    notCoveredInWarranty: string;
-
-    @Column({ default: null })
-    warrantyServiceType: string;
-
-    @Column({ default: null })
     dimensions: string;
-
-    @Column({ default: false, nullable: false })
-    spikeSuppressor: boolean;
-
-    @Column({ default: false, nullable: false })
-    outputVoltageCorrection: boolean;
-
-    @Column({ default: false, nullable: false })
-    tripDelay: boolean;
-
-    @Column({ default: false, nullable: false })
-    circuitBreaker: boolean;
-
-    @Column({ default: null })
-    maxPowerHandlingCapacity: string;
-
-    @Column({ default: null })
-    maxSpikeCurrent: string;
-
-    @Column({ default: null })
-    accuracy: string;
-
-    @Column({ default: null })
-    powerRating: string;
-
-    @Column({ default: false, nullable: false })
-    automaticReset: string;
-
-    @Column({ default: null })
-    discountPrice: number;
-
-    // @Column({ default: [] })
-    // productImages: string;
-
-    // @JoinColumn({ name: 'product image' })
-    // @OneToOne(
-    //     () => ProductImage,
-    //     {
-    //     nullable: true
-    //     }
-    // )
-    // productImages?: ProductImage;
-    
-    // @Column({ nullable: true })
-    // productImagesId?: number;
 }
 
 @Entity({ name: 'tblCart' })
@@ -177,14 +80,20 @@ export class UserCart extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({ default: null })
-    email: string;
+    @Column({ default: null, type: 'uuid' })
+    user_id: string;
 
     @Column({ default: [] })
     products: string;
 
     @Column({ default: false })
     paymentStatus: boolean;
+
+    @CreateDateColumn()
+    createdat: Date;
+  
+    @UpdateDateColumn()
+    updatedat: Date;
 }
 
 @Entity({ name: 'tblShippingDtl' })
@@ -193,27 +102,52 @@ export class UserShippingDetail extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({ default: null })
-    fullName: string;
+    @Column({ default: null, type: 'uuid' })
+    user_id: string;
 
     @Column({ default: null })
-    email: string;
+    name: string;
 
     @Column({ type: 'bigint', default: null })
     phNumber: number;
 
     @Column({ default: null })
-    street: string;
+    address: string;
 
     @Column({ default: null })
-    landmark: string;
+    county: string;
 
     @Column({ default: null })
-    city: string;
+    eir: string;
+
+    @CreateDateColumn()
+    createdat: Date;
+  
+    @UpdateDateColumn()
+    updatedat: Date;
+}
+
+@Entity({ name: 'tblPaymentDtl' })
+export class UserPaymentDetail extends BaseEntity {
+    @Column()
+    @PrimaryGeneratedColumn("uuid")
+    id: string;
+
+    @Column({ default: null, type: 'uuid' })
+    user_id: string;
 
     @Column({ default: null })
-    state: string;
+    cardname: string;
+
+    @Column({ type: 'bigint', default: null })
+    cardnumber: number;
 
     @Column({ default: null })
-    zipcode: number;
+    cvv: number;
+
+    @CreateDateColumn()
+    createdat: Date;
+  
+    @UpdateDateColumn()
+    updatedat: Date;
 }

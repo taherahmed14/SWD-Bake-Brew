@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 const ProductCard = (product) => {
   const navigate = useNavigate();
   const [base64String, setbase64String] = useState();
+  const role = sessionStorage.getItem("role");
+
   useEffect(() => {
     setbase64String(
       btoa(String.fromCharCode(...new Uint8Array(product?.product?.data.data)))
@@ -30,16 +32,15 @@ const ProductCard = (product) => {
           {product?.product?.title}
         </h2>
         <div className="shortDesc_div">{product?.product?.category}</div>
-        <div className="shortDesc_div">{product?.product?.mountType}</div>
         <div className="shortDesc_div">
           <div>
             Price &nbsp;
             <strong>
-              ₹ {product?.product?.discountPrice}
+              € {product?.product?.price}
             </strong> 
-            <span style={{textDecoration: "line-through"}}>
-              ₹ {product?.product?.price} 
-            </span> 
+            {/* <span style={{textDecoration: "line-through"}}>
+              € {product?.product?.price} 
+            </span>  */}
             <span style={{color: "blue"}}> 
               {product?.product?.discount}% off
             </span>
@@ -58,13 +59,16 @@ const ProductCard = (product) => {
               color: "grey",
             }}
             variant="outlined"
-            onClick={() => product?.handleClick(product.product)}
+            // onClick={() => product?.handleClick(product.product)}
+            onClick={role === "customer" ?
+            () => product?.handleClick(product.product) :
+            () => product?.removeProduct(product.product)}
           >
-            Add to Cart
+            {role === "customer" ? "Add to Cart" : "Delete Product"}
           </Button>
           {/* </NavLink> */}
 
-          <Button
+          {/* <Button
             style={{
               backgroundColor: "black",
               border: "1px solid gray",
@@ -76,7 +80,7 @@ const ProductCard = (product) => {
             onClick={() => navigate(`/shop/${product?.product?.product_id}`)}
           >
             View Product
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

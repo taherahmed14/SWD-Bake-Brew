@@ -1,40 +1,22 @@
-import { IsNotEmpty, IsEmail, IsString } from 'class-validator';
+import { IsString, IsNumber, IsByteLength, IsNotEmpty } from 'class-validator';
 
-export class UserLoginDto {
-    @IsNotEmpty()
-    @IsEmail()
-    email: string;
-  
-    @IsNotEmpty()
-    @IsString()
-    password: string;
-  }
+export class CreateProductDto {
+  @IsString()
+  @IsNotEmpty()
+  title: string;
 
-  export class CreateUserAccountDto {
-    @IsString()
-    @IsNotEmpty()
-    firstname: string;
+  @IsNumber()
+  @IsNotEmpty()
+  price: string;
 
-    @IsString()
-    middlename: string;
+  @IsNumber()
+  discount: string;
 
-    @IsString()
-    @IsNotEmpty()
-    lastname: string;
+  @IsString()
+  @IsNotEmpty()
+  category: string;
 
-    @IsNotEmpty()
-    @IsEmail()
-    email: string;
-
-    @IsNotEmpty()
-    @IsString()
-    password: string;
-
-    @IsNotEmpty()
-    @IsString()
-    confirmPassword: string;
-  
-    @IsNotEmpty()
-    @IsString()
-    mobile: string;
-  }
+  @IsNumber()
+  @IsNotEmpty()
+  quantity: string;
+}

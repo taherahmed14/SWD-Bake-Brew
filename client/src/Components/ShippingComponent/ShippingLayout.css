@@ -18,15 +18,12 @@
   width: 50%;
   height: auto;
   background-color: white;
+  margin-top: 40px;
 }
 .ship_right_div {
   width: 40%;
   height: auto;
   background-color: #e7e3e3;
-  /* padding-right: 50px; */
-  /* display: flex;
-  flex-direction: column; */
-  /* border: 1px solid blue; */
 }
 .shiping_form_div {
   width: 80%;
@@ -67,7 +64,7 @@
   margin: 2rem 1rem;
   display: flex;
   justify-content: space-between;
-  margin-top: 70px;
+  margin-top: 40px;
 }
 .cart_item_div {
   width: 100%;
@@ -77,6 +74,9 @@
   flex-direction: row;
   overflow: hidden;
   border-bottom: 1px solid rgb(215, 206, 206);
+}
+.cart_item_div > div:nth-child(2) {
+  width: 250px;
 }
 .cart_image_div {
   width: 20%;
@@ -94,7 +94,7 @@
 }
 .cart_name_div {
   width: 80%;
-  height: 45px;
+  /* height: 45px; */
   /* border: 1px solid red; */
   text-align: left;
   vertical-align: middle;
@@ -105,14 +105,15 @@
   margin-bottom: 0;
 }
 .cart_proce_div {
-  width: 30%;
+  /* width: 30%; */
   /* height: 100%; */
   text-align: left;
-  vertical-align: middle;
+  /* vertical-align: middle; */
   /* padding: 1rem; */
   font-weight: 600;
   font-size: 14px;
-  margin: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
   /* padding: 10px 20px; */
   /* border: 1px solid red; */
 }

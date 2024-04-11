@@ -1,30 +1,41 @@
-import { Controller, Post, HttpCode, HttpStatus, Body, Param, ParseUUIDPipe, UseGuards, Get, Query } from '@nestjs/common';
+import { Controller, Post, HttpCode, HttpStatus, UseInterceptors, Body, Param, UploadedFile, ParseUUIDPipe, UseGuards, Get, Query, Patch, Delete } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard';
 import { AdminApiService } from './admin-api.service';
-import { UserLoginDto, CreateUserAccountDto } from './dto/admin-api.dto';
+import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
+import { CreateProductDto } from './dto/admin-api.dto';
 
-// @UseGuards(JwtAuthGuard)
 @Controller('admin-api')
 export class AdminApiController {
   constructor(private readonly adminApiService: AdminApiService) {}
 
-  @Post('/login')
-  async userLogIn(@Body() userLoginDto: UserLoginDto) {
-    return this.adminApiService.userLogIn(userLoginDto);
-  }
-
-  @Post('/create-account')
-  async createUserAccount(@Body() createUserAccountDto: CreateUserAccountDto) {
-    return this.adminApiService.createUserAccount(createUserAccountDto);
-  }
-
-  @Get('/get-warranty')
+  @Patch('/delete-product/:id')
   @UseGuards(AuthGuard('jwt'))
-  async getAllWarrantyRecords(@Query() params: any) {
-    console.log("Params: ", params);
-    const { pageSize, page } = params;
-    return this.adminApiService.getAllWarrantyRecords(pageSize, page);
+  deleteProduct(@Param('id') id: string) {
+    return this.adminApiService.deleteProduct(id);
   }
 
+  @Post('/product')
+  @UseGuards(AuthGuard('jwt'))
+  @UseInterceptors(FileInterceptor('file'))
+  async createProductImage(
+    @Body() createProductDto, 
+    @UploadedFile() file: Express.Multer.File) {
+    console.log("File: ", file);
+    console.log("File buffer: ", file.buffer);
+    console.log("Data: ", createProductDto);
+    
+    return this.adminApiService.createProduct(createProductDto, file.buffer, file.originalname);
+  }
+
+  @Get('/get-admins')
+  @UseGuards(AuthGuard('jwt'))
+  async getAdmins() {
+    return this.adminApiService.getAdmins();
+  }
+
+  @Delete('/delete-admin/:id')
+  @UseGuards(AuthGuard('jwt'))
+  async deleteAdmin(@Param('id') id: string) {
+    return this.adminApiService.deleteAdmin(id);
+  }
 }

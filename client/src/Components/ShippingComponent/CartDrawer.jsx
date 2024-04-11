@@ -36,7 +36,7 @@ const CartDrawer = ({ data, handleDelete, changeQuantity }) => {
 
   useEffect(() => {
     const totalPrice = items?.reduce(
-      (total, product) => total + +product?.discountPrice * product?.quantity,
+      (total, product) => total + +product?.price * product?.quantity,
       0
     );
     setTotalPrice(totalPrice);
@@ -61,7 +61,7 @@ const CartDrawer = ({ data, handleDelete, changeQuantity }) => {
                 </div>
                 <div>
                   <div className="cart_name_div"> {item.title}</div>
-                  <div className="cart_proce_div">₹ {item.discountPrice}</div>
+                  <div className="cart_proce_div">€ {item.price}</div>
                 </div>
                 <div className="cart_select_div">
                   {/* <InputLabel id="demo-simple-select-label">
@@ -115,22 +115,22 @@ const CartDrawer = ({ data, handleDelete, changeQuantity }) => {
           <div className="cartSum">
             <div className="cart_subTotal_div">
               <div>Sub-Total</div>
-              <div>₹{totalPrice}</div>
+              <div>€{totalPrice}</div>
             </div>
             <div className="cart_subTotal_div">
               <div>Shipping</div>
-              <div>₹{shipping}</div>
+              <div>€ 3</div>
             </div>
             <div className="cart_subTotal_div">
               <div>Estimated Taxes</div>
-              <div>₹{tax}</div>
+              <div>€ 1</div>
             </div>
             <div className="cart_Total_div">
               <div className="cart_Total">
                 Total <span></span>
               </div>
               <div className="cart_Total">
-                <span className="inr"></span> ₹{totalPrice + tax + shipping}
+                <span className="inr"></span> €{totalPrice + 1 + 3}
               </div>
             </div>
             <Button

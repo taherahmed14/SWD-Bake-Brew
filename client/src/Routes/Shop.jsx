@@ -63,8 +63,8 @@ const Shop = () => {
           <p style={{paddingLeft: "20px"}}>Filters</p>
           <Divider />
           <div className="filter_form">
-            <p style={{paddingLeft:"20px"}}>Filters currently not available</p>
-            {/* <FormGroup>
+            <p style={{paddingLeft:"20px"}}>Filter by</p>
+            <FormGroup>
               <FormControlLabel
                 style={{ marginTop: "0.5rem", marginLeft: "1rem" }}
                 control={
@@ -75,7 +75,7 @@ const Shop = () => {
                   />
                 }
                 label={
-                  <span style={{ fontSize: "14px" }}>{"Refrigirators"}</span>
+                  <span style={{ fontSize: "14px" }}>{"Bake"}</span>
                 }
               />
               <FormControlLabel
@@ -87,10 +87,14 @@ const Shop = () => {
                     }}
                   />
                 }
-                label={<span style={{ fontSize: "14px" }}>{"Telivision"}</span>}
+                label={<span style={{ fontSize: "14px" }}>{"Brew"}</span>}
               />
+            </FormGroup>
+
+            <p style={{paddingLeft:"20px"}}>Sort by</p>
+            <FormGroup>
               <FormControlLabel
-                style={{ marginLeft: "1rem" }}
+                style={{ marginTop: "0.5rem", marginLeft: "1rem" }}
                 control={
                   <Checkbox
                     style={{
@@ -99,13 +103,27 @@ const Shop = () => {
                   />
                 }
                 label={
-                  <span style={{ fontSize: "14px" }}>{"Air Condition"}</span>
+                  <span style={{ fontSize: "14px" }}>{"Price high to low"}</span>
                 }
               />
-            </FormGroup> */}
+              <FormControlLabel
+                style={{ marginLeft: "1rem" }}
+                control={
+                  <Checkbox
+                    style={{
+                      transform: "scale(0.7)",
+                    }}
+                  />
+                }
+                label={<span style={{ fontSize: "14px" }}>{"Price low to high"}</span>}
+              />
+            </FormGroup>
           </div>
         </div>
-        <PorductList cartItems={cartItems} handleAddToCart={handleAddToCart} />
+        <PorductList 
+          cartItems={cartItems} 
+          handleAddToCart={handleAddToCart} 
+        />
       </div>
       <Footer />
     </div>

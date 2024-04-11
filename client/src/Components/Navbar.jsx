@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.modules.css";
-import logo from "../Assets/logo.jpg";
 import "font-awesome/css/font-awesome.min.css";
 import LocalMallSharpIcon from "@mui/icons-material/LocalMallSharp";
 import { Badge, Button, Paper, Typography } from "@mui/material";
@@ -8,20 +7,12 @@ import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CartDrawer from "./ShippingComponent/CartDrawer";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import SidebarComponent from "./SideBarComponent/SidebarComponent";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import cartImg from "../Assets/desc1.jpg";
+import { useAuth } from "../Context/Auth.context";
 
 const nav_btn = { color: "black", backgroundColor: "transparent" };
 const Navbar = ({ cartItems, handleDelete, changeQuantity }) => {
-  console.log("cartItems::: ", cartItems);
-  //   JSON.parse(sessionStorage.getItem("cartItems") || "[]")
-  // );
-  // console.log("items::: ", items);
-
-  const navigate = useNavigate(true);
+  const navigate = useNavigate();
   const [popup, setPopup] = useState(false);
   const [state, setState] = React.useState({
     top: false,
@@ -31,6 +22,7 @@ const Navbar = ({ cartItems, handleDelete, changeQuantity }) => {
   });
 
   const anchor = "right";
+  const { logout } = useAuth();
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -61,14 +53,20 @@ const Navbar = ({ cartItems, handleDelete, changeQuantity }) => {
     sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  const handleLogout = () => {
+    sessionStorage.clear();
+    logout();
+    navigate("/login");
+  }
+
   return (
     <div className="navbar">
       <div className="sidebar">
         <SidebarComponent />
       </div>
-      <div className="inner">
-        <NavLink to="/">
-          <img className="logo" src={logo} alt="logo" />
+      <div className="logo_text">
+        <NavLink className="logo_text_dec" to="/shop">
+          Bake & Brew
         </NavLink>
       </div>
       <div className="inner_2">
@@ -90,18 +88,17 @@ const Navbar = ({ cartItems, handleDelete, changeQuantity }) => {
             <Button style={nav_btn}>Review</Button>
           </NavLink>
         </div>
-        <div className="category_list">
-          <NavLink to="/Warranty" style={{ textDecoration: "none" }}>
-            <Button style={nav_btn}>Warranty</Button>
-          </NavLink>
-        </div>
+    
         <div className="category_list">
           <NavLink to="/about" style={{ textDecoration: "none" }}>
-            <Button style={nav_btn}>About</Button>
+            <Button style={nav_btn}>About Us</Button>
           </NavLink>
         </div>
       </div>
       <div className="third_div">
+        <div style={{ cursor: "pointer" }} onClick={handleLogout}>
+          <p>Logout</p>
+        </div>
         <div className="icon_div">
           <Badge badgeContent={cartItems?.length} color="primary">
             <LocalMallSharpIcon onClick={toggleDrawer(anchor, true)} />

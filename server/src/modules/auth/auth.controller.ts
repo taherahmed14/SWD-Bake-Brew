@@ -1,34 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { CreateUserAccountDto, UserVerifyDto, UserLoginDto, VerifyOTPDto, CreateAdminAccountDto } from './dto/create-auth.dto';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Request, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  userRegister(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.userRegister(createAuthDto);
+  @Post("/register")
+  async userRegister(@Body() createUserAccountDto: CreateUserAccountDto) {
+    return this.authService.userRegister(createUserAccountDto);
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Post("/verify")
+  async verifyUser(@Body() userVerifyDto: UserVerifyDto) {
+    return this.authService.verifyUser(userVerifyDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
+  @Post('/login')
+  async userLogIn(
+    @Body() userLoginDto: UserLoginDto
+    ) {
+    return this.authService.userLogIn(userLoginDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
+  @Post('/otp')
+  async verifyOTP(@Body() verifyOTPDto: VerifyOTPDto) {
+    return this.authService.verifyOTP(verifyOTPDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @Post("/admin-register")
+  @UseGuards(AuthGuard('jwt'))
+  async adminRegister(@Body() createAdminAccountDto: CreateAdminAccountDto) {
+    return this.authService.adminRegister(createAdminAccountDto);
   }
 }

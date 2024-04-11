@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -9,24 +9,44 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles.guard';
 import { AdminApiModule } from './modules/admin-api/admin-api.module';
 import { AuthenticationModule } from './authentication/authentication.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { EncryptionService } from './common/encryption/encryption';
+import { MailService } from './mail/mail.service';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { CsrfMiddleware } from './common/middleware/csrf.middleware';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot([{
+      ttl: 30000,
+      limit: 20,
+    }]),
     UserApiModule,
     DatabaseFileModule,
     TypeOrmModule.forRoot(typeOrmConfig),
     AdminApiModule,
     AuthenticationModule,
-    AuthModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [
     AppService,
+    EncryptionService,
+    MailService,
     {
       provide: APP_GUARD,
       useClass: RolesGuard
-    }
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard
+    },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(CsrfMiddleware)
+      .forRoutes({ path: 'user-api', method: RequestMethod.POST });
+  }
+}

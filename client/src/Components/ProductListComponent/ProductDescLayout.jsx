@@ -112,7 +112,7 @@ export const ProductDescLayout = ({ cartItems, handleAddToCart }) => {
           <div className="price_div">
             {/* <div className="striked-off-price">Rs 2500.00</div> */}
             <div style={{ fontWeight: "bold", marginLeft: "10px" }}>
-              ₹ {product?.product?.offerPrice} <span style={{textDecoration: "line-through"}}>₹ {product?.product?.MRPprice} </span> 
+              € {product?.product?.offerPrice} <span style={{textDecoration: "line-through"}}>€ {product?.product?.MRPprice} </span> 
               <span style={{color: "blue"}}> {product?.product?.discount}% off</span>
             </div>
           </div>

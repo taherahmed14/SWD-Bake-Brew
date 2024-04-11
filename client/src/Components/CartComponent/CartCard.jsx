@@ -83,22 +83,22 @@ const CartCard = ({ data, handleDelete, changeQuantity }) => {
           <>
             <div className="cart_subTotal_div">
               <div>Sub-Total</div>
-              <div>₹{totalPrice}</div>
+              <div>€{totalPrice}</div>
             </div>
             <div className="cart_subTotal_div">
               <div>Shipping</div>
-              <div>₹{shipping}</div>
+              <div>€{shipping}</div>
             </div>
             <div className="cart_subTotal_div">
               <div>Estimated Taxes</div>
-              <div>₹{tax}</div>
+              <div>€{tax}</div>
             </div>
             <div className="cart_Total_div">
               <div className="cart_Total">
                 Total <span></span>
               </div>
               <div className="cart_Total">
-                <span className="inr">INR</span> ₹{totalPrice + tax + shipping}
+                <span className="inr">INR</span> €{totalPrice + tax + shipping}
               </div>
             </div>
             <div className="cartBtnDiv">

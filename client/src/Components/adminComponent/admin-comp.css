@@ -56,9 +56,14 @@
 .admin-sidebar {
     margin-top: 50px;
     width: 300px;
+    /* height: auto; */
     min-height: 700px;
     /* border: 1px solid red; */
-    background-color: black;
+    /* background-color: black; */
+}
+
+.sidebar-text {
+    color: black;
 }
 
 .sidebar-detail {

@@ -5,7 +5,7 @@ const url = process.env.REACT_APP_BASE_URL;
 const NextronAppServices = axios.create({
   baseURL: url,
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "application/json"
   },
 });
 export const NextronAppServicesWarranty = axios.create({

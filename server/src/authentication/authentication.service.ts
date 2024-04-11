@@ -8,4 +8,8 @@ export class AuthenticationService {
   async generateToken(data: any) {
     return this.jwtService.sign(data);
   }
+
+  async verifyToken(token: string) {
+    return this.jwtService.verify(token);
+  }
 }
