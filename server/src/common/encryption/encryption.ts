@@ -15,12 +15,9 @@ export class EncryptionService {
     encrypt(text: string): { encryptedData: string, iv: string, tag: string } {
         const iv = randomBytes(this.ivLength).toString('hex');
         const cipher = createCipheriv(this.algorithm, Buffer.from(this.key), Buffer.from(iv, 'hex'));
-        
         let encryptedData = cipher.update(text, 'utf8', 'hex');
         encryptedData += cipher.final('hex');
-        
         const tag = cipher.getAuthTag().toString('hex');
-
         return { encryptedData, iv, tag };
     }
 

@@ -19,7 +19,7 @@ import { CsrfMiddleware } from './common/middleware/csrf.middleware';
   imports: [
     ThrottlerModule.forRoot([{
       ttl: 30000,
-      limit: 20,
+      limit: 100,
     }]),
     UserApiModule,
     DatabaseFileModule,
@@ -43,10 +43,4 @@ import { CsrfMiddleware } from './common/middleware/csrf.middleware';
     },
   ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(CsrfMiddleware)
-      .forRoutes({ path: 'user-api', method: RequestMethod.POST });
-  }
-}
+export class AppModule {}

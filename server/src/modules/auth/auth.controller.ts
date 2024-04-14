@@ -21,9 +21,10 @@ export class AuthController {
 
   @Post('/login')
   async userLogIn(
-    @Body() userLoginDto: UserLoginDto
+    @Body() userLoginDto: UserLoginDto,
+    @Res({ passthrough: true }) response: Response
     ) {
-    return this.authService.userLogIn(userLoginDto);
+    return this.authService.userLogIn(userLoginDto, response);
   }
 
   @Post('/otp')

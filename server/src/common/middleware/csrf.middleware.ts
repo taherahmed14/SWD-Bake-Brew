@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 export class CsrfMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     // CSRF protection logic
-    const csrfToken = req.cookies['csrfToken'];
+    const csrfToken = req.cookies['csrf'];
     const { csrfToken: csrfHeader } = req.headers;
 
     if (!csrfToken || csrfToken !== csrfHeader) {

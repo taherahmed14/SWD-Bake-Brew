@@ -11,7 +11,7 @@ import { EncryptionService } from 'src/common/encryption/encryption';
 import { MailService } from 'src/mail/mail.service';
 import { randomBytes, createHash } from 'crypto';
 import IJwtPayload from 'src/authentication/jwt-payload';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -48,10 +48,17 @@ export class AuthService {
     try {
       //check for existing account with same email id
       let existingEmail = await this.dataSource.query(
-        `select email, emailiv, emailtag from tbluser t where t."role" = '${createUserAccountDto.role}'`
+        `select firstname, nameiv, nametag, email, emailiv, emailtag from tbluser t where t."role" = '${createUserAccountDto.role}'`
       );
   
       for(let i = 0; i < existingEmail.length; i++) {
+        let decryptName = this.encryptionService.decrypt(
+          existingEmail[i].firstname,
+          existingEmail[i].nameiv,
+          existingEmail[i].nametag
+        );
+        console.log("User names::", decryptName);
+        
         let decryptEmail = this.encryptionService.decrypt(
           existingEmail[i].email, 
           existingEmail[i].emailiv, 
@@ -104,7 +111,7 @@ export class AuthService {
       newUser.verifytoken = hashToken;
 
       let user = await this.userRepository.save(newUser);
-      console.log("User: ", user);
+      // console.log("User: ", user);
 
       return {
         status: 200,
@@ -160,7 +167,7 @@ export class AuthService {
     }
   }
 
-  async userLogIn(userLoginDto: UserLoginDto) {
+  async userLogIn(userLoginDto: UserLoginDto, response: Response) {
     const { email, password, role } = userLoginDto;
     
     try {
@@ -240,9 +247,12 @@ export class AuthService {
         });
 
         const csrfToken = randomBytes(32).toString('hex');
-        // response.cookie('csrf', csrfToken);
+        console.log("Cookies::", response.cookie);
 
-        // response.cookie('csrfToken', csrfToken);
+        response.cookie('csrf', csrfToken, {
+          secure: true,
+          httpOnly: true
+        });
 
         return { 
           status: 200, 

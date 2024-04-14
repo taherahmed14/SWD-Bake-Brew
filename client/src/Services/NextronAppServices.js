@@ -143,14 +143,15 @@ export const getProductsById = async (id) => {
   }
 };
 
-export const postShipperData = async (data, token) => {
+export const postShipperData = async (data, token, csrf) => {
   try {
     return await axios.post(`${baseUrl}user-api/user-shipping-address`, 
       data,
       {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+          "X-CSRF-Token": csrf
         }
       }
     );
@@ -162,7 +163,7 @@ export const postShipperData = async (data, token) => {
     return error;
   }
 };
-export const postCartData = async (data, token) => {
+export const postCartData = async (data, token, csrf) => {
   console.log("Token::", token);
   try {
     return await axios.post(`${baseUrl}user-api/user-cart`, 
@@ -170,7 +171,8 @@ export const postCartData = async (data, token) => {
       {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+          "X-CSRF-Token": csrf
         }
       }
     );
@@ -180,14 +182,15 @@ export const postCartData = async (data, token) => {
     return error;
   }
 };
-export const postPaymentData = async (data, token) => {
+export const postPaymentData = async (data, token, csrf) => {
   try {
     return await axios.post(`${baseUrl}user-api/user-payment`, 
       data,
       {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+          "X-CSRF-Token": csrf,
         }
       }
     );

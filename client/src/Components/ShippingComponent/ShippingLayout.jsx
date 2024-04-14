@@ -75,7 +75,7 @@ const ShippingLayout = ({ cartItems }) => {
       cvv: values.cvv
     }
 
-    await postCartData(cartObj, token)
+    await postCartData(cartObj, token, csrf)
       .then((result) => {
         if (result.data.status === 200 && result.status === 201) {
           console.log(result.data.message);
@@ -83,7 +83,7 @@ const ShippingLayout = ({ cartItems }) => {
       })
       .catch((error) => console.log("error", error));
 
-    await postShipperData(shipObj, token)
+    await postShipperData(shipObj, token, csrf)
       .then((result) => {
         if (result.data.status === 200 && result.status === 201) {
           console.log(result.data.message);
@@ -91,7 +91,7 @@ const ShippingLayout = ({ cartItems }) => {
       })
       .catch((error) => console.log("error", error));
 
-    await postPaymentData(paymentObj, token)
+    await postPaymentData(paymentObj, token, csrf)
       .then((result) => {
         if (result.data.status === 200 && result.status === 201) {
           console.log(result.data.message);
