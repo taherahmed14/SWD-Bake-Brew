@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useParams, Navigate } from "react-router-dom";
-import PaymentPage from "../Components/PaymentAndABillingCompoennt/PaymentPage";
 import About from "./About";
-import Billing from "./Billing";
-import CartPage from "./CartPage";
-import Contact from "./Contact";
-import Home from "./Home";
-import ProductDescription from "./ProductDescription";
 import Review from "./Review";
 import { Shipping } from "./Shipping";
 import Shop from "./Shop";
-import { AdminPortal } from "../Components/adminComponent/admin-portal";
 import RegisterForm from "../Components/authComponents/register";
 import { VerifyUser } from "../Components/authComponents/VerifyUser";
 import LoginForm from "../Components/authComponents/Login";

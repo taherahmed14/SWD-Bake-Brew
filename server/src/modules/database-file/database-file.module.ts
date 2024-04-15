@@ -3,7 +3,6 @@ import { DatabaseFileService } from './database-file.service';
 import DatabaseFileController from './database-file.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import ProductImage from 'src/entities/product_image.entity';
-import ProductWarranty from 'src/entities/warranty.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
 
@@ -16,7 +15,7 @@ import { ThrottlerGuard } from '@nestjs/throttler';
     },
   ],
   imports: [
-    TypeOrmModule.forFeature([ProductImage, ProductWarranty])
+    TypeOrmModule.forFeature([ProductImage])
   ]
 })
 export class DatabaseFileModule {}

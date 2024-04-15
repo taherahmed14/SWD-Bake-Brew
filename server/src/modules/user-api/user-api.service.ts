@@ -7,10 +7,8 @@ import { Repository, DataSource } from 'typeorm';
 import { Products, UserCart, UserPaymentDetail, UserShippingDetail } from '../../entities/user-api.entity';
 import { DatabaseFileService } from '../database-file/database-file.service';
 import ProductImage from 'src/entities/product_image.entity';
-import ProductWarranty from 'src/entities/warranty.entity';
 import { InternalServerErrorException } from '@nestjs/common';
 var jsSHA = require("jssha");
-const PayU = require("payu-websdk");
 
 @Injectable()
 export class UserApiService {
@@ -28,11 +26,6 @@ export class UserApiService {
     @InjectRepository(UserPaymentDetail)
     private readonly userPaymentRepository: Repository<UserPaymentDetail>,    
   ){}
-
-  payuClient = new PayU({
-    key: process.env.payumoneyMerchantKey,
-    salt: process.env.payumoneyMerchantSalt,
-  }, "TEST");
 
   async getProducts() {
     // let allProducts = await this.productRepository.find();

@@ -3,7 +3,7 @@ import { TextField, Button, Box, Select, MenuItem, FormControl, InputLabel, Typo
 // import { postUserRegister } from '../../Services/NextronAppServices';
 import { useNavigate } from 'react-router-dom';
 import { AdminPortal } from '../admin-portal';
-import { createNewProduct } from '../../../Services/NextronAppServices';
+import { createNewProduct } from '../../../Services/bbAppServices';
 
 const CreateProduct = () => {
     const [formData, setFormData] = useState({

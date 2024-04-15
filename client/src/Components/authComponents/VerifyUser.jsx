@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { verifyUser } from '../../Services/NextronAppServices';
+import { verifyUser } from '../../Services/bbAppServices';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 

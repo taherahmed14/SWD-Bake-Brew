@@ -37,23 +37,3 @@ export const shipmentvalidations = yup.object().shape({
     .required("CVV is required")
 });
 
-export const warrantyValidations = yup.object().shape({
-  email: yup
-    .string()
-    .email("Please Enter Valid Email")
-    .required("Email is Required"),
-  phone: yup
-    .string()
-    .required("Mobile number is Required")
-    .matches(phoneRegExp, "Phone number is not valid")
-    .min(10)
-    .max(10),
-  address: yup.string().required("Address is requires"),
-  serialNumber: yup.string().required("Serial Number is requires"),
-  model: yup.string().required("model is requires"),
-  state: yup.string().required('State is required'),
-  // productImg: yup.mixed().required("Image is Required"),
-  // invoice: yup.mixed().required("Image is Required"),
-
-});
-

@@ -11,7 +11,6 @@ import { AuthenticationModule } from 'src/authentication/authentication.module';
 import { Products } from 'src/entities/user-api.entity';
 import { DatabaseFileService } from '../database-file/database-file.service';
 import ProductImage from 'src/entities/product_image.entity';
-import ProductWarranty from 'src/entities/warranty.entity';
 import { EncryptionService } from 'src/common/encryption/encryption';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
@@ -28,8 +27,7 @@ import { ThrottlerGuard } from '@nestjs/throttler';
     TypeOrmModule.forFeature([
       UserEntity,
       Products,
-      ProductImage,
-      ProductWarranty
+      ProductImage
     ]),
     PassportModule,
     JwtModule.register({

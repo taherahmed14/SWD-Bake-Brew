@@ -4,7 +4,7 @@ import ProductCard from "./ProductCard";
 import "./ProductList.moducles.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { getAllProducts, deleteProduct } from "../../Services/NextronAppServices";
+import { getAllProducts, deleteProduct } from "../../Services/bbAppServices";
 import Loader from "../CommonComponents/Loader";
 import shop_banner from "../../Assets/shop-banner.jpg"
 

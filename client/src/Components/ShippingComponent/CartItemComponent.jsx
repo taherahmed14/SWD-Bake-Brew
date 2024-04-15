@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./ShippingLayout.css";
-import cartImg from "../../Assets/desc1.jpg";
 
 const CartItemComponent = ({ cartItems,totalPrice }) => {
 

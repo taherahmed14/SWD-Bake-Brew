@@ -1,11 +1,7 @@
 import { NavLink, Navigate, useNavigate, useLocation } from "react-router-dom";
-import logo from "../../Assets/logo.jpg";
-import Avatar from '@mui/material/Avatar';
 import "./admin-comp.css";
 import { useState } from "react";
 import { AdminSidebar } from "./admin-sidebar";
-import AdminProducts from "./tabs/Admin-products";
-import PorductList from "../ProductListComponent/PorductList";
 
 export const AdminPortal = () => {
     const [dropdown, showdropdown] = useState(false);

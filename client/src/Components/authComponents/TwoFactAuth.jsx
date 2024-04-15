@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography, Box } from "@mui/material";
 import axios from 'axios';
-import { postVerifyOtp } from '../../Services/NextronAppServices';
+import { postVerifyOtp } from '../../Services/bbAppServices';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/Auth.context';
 

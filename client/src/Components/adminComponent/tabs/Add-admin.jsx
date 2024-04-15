@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, Select, MenuItem, FormControl, InputLabel, Typography, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { AdminPortal } from '../admin-portal';
-import { postAdminRegister, postUserRegister } from '../../../Services/NextronAppServices';
+import { postAdminRegister, postUserRegister } from '../../../Services/bbAppServices';
 
 const AddAdmin = () => {
     const [formData, setFormData] = useState({

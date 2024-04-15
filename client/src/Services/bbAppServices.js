@@ -1,4 +1,4 @@
-import NextronAppServices from "./api";
+import bbAppServices from "./api";
 import axios from "axios";
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
@@ -6,7 +6,7 @@ const baseUrl = process.env.REACT_APP_BASE_URL;
 export const postUserRegister = async (data) => {
   console.log('data::: ', data);
   try {
-    return await NextronAppServices.post(`${baseUrl}auth/register`, data);
+    return await bbAppServices.post(`${baseUrl}auth/register`, data);
   } catch (error) {
     return error;
   }
@@ -14,7 +14,7 @@ export const postUserRegister = async (data) => {
 
 export const verifyUser = async (data) => {
   try {
-    return await NextronAppServices.post(`${baseUrl}auth/verify`, data);
+    return await bbAppServices.post(`${baseUrl}auth/verify`, data);
   } catch (error) {
     return error;
   }
@@ -23,7 +23,7 @@ export const verifyUser = async (data) => {
 export const postUserLogin = async (data) => {
   console.log('data::: ', data);
   try {
-    return await NextronAppServices.post(`${baseUrl}auth/login`, data);
+    return await bbAppServices.post(`${baseUrl}auth/login`, data);
   } catch (error) {
     return error;
   }
@@ -32,7 +32,7 @@ export const postUserLogin = async (data) => {
 export const postVerifyOtp = async (data) => {
   console.log('data::: ', data);
   try {
-    return await NextronAppServices.post(`${baseUrl}auth/otp`, data);
+    return await bbAppServices.post(`${baseUrl}auth/otp`, data);
   } catch (error) {
     return error;
   }
@@ -90,7 +90,7 @@ export const createNewProduct = async (data, token) => {
 export const postAdminRegister = async (data, token) => {
   console.log('data::: ', data);
   try {
-    return await NextronAppServices.post(`${baseUrl}auth/admin-register`, 
+    return await bbAppServices.post(`${baseUrl}auth/admin-register`, 
       data,
       {
         headers: {
@@ -135,14 +135,6 @@ export const deleteAdmin = async (id, token) => {
   }
 };
 
-export const getProductsById = async (id) => {
-  try {
-    return await NextronAppServices.get(`${baseUrl}user-api/product/${id}`);
-  } catch (error) {
-    return error;
-  }
-};
-
 export const postShipperData = async (data, token, csrf) => {
   try {
     return await axios.post(`${baseUrl}user-api/user-shipping-address`, 
@@ -155,7 +147,7 @@ export const postShipperData = async (data, token, csrf) => {
         }
       }
     );
-    // return await NextronAppServices.post(
+    // return await bbAppServices.post(
     //   `${baseUrl}user-api/user-shipping-address`,
     //   data
     // );
@@ -176,7 +168,7 @@ export const postCartData = async (data, token, csrf) => {
         }
       }
     );
-    // return await NextronAppServices.post(`${baseUrl}user-api/user-cart`, 
+    // return await bbAppServices.post(`${baseUrl}user-api/user-cart`, 
     // data);
   } catch (error) {
     return error;
@@ -194,32 +186,18 @@ export const postPaymentData = async (data, token, csrf) => {
         }
       }
     );
-    // return await NextronAppServices.post(`${baseUrl}user-api/user-cart`, 
+    // return await bbAppServices.post(`${baseUrl}user-api/user-cart`, 
     // data);
   } catch (error) {
     return error;
   }
 };
-export const postWarrantyData = async (data) => {
-  console.log('data::: ', data);
-  try {
-    return await NextronAppServices.post(`${baseUrl}user-api/warranty-claim`, data);
-  } catch (error) {
-    return error;
-  }
-};
-export const postPayumoney = async (data) => {
-  console.log('data::: ', data);
-  try {
-    return await NextronAppServices.post(`${baseUrl}user-api/payment/payumoney`, data);
-  } catch (error) {
-    return error;
-  }
-};
+
+
 export const postAdminLogin = async (data) => {
   console.log('data::: ', data);
   try {
-    return await NextronAppServices.post(`${baseUrl}admin-api/login`, data);
+    return await bbAppServices.post(`${baseUrl}admin-api/login`, data);
   } catch (error) {
     return error;
   }

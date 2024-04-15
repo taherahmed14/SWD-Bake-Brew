@@ -3,7 +3,7 @@ import { AdminPortal } from "../admin-portal";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Buffer } from "buffer";
-import { deleteAdmin, getAllAdmin } from "../../../Services/NextronAppServices";
+import { deleteAdmin, getAllAdmin } from "../../../Services/bbAppServices";
 import delete_icon from "../../../Assets/delete.png"
 
 export const AdminRecords = () => {

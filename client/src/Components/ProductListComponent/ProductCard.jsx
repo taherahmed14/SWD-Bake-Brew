@@ -1,7 +1,5 @@
 import { Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
-import Carousal from "../CarousalComponent/Carousal";
 import "./ProductList.moducles.css";
 import { useNavigate } from "react-router-dom";
 
